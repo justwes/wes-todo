@@ -1,4 +1,21 @@
+import { TaskColumn } from "@/components/TaskColumn";
+
 export default function HomePage() {
+  const tasks = [
+    {
+      id: "1",
+      title: "Write tests",
+      priority: "HIGH" as const,
+      status: "TODO" as const,
+    },
+    {
+      id: "2",
+      title: "Refactor",
+      priority: "LOW" as const,
+      status: "DOING" as const,
+    },
+  ];
+
   return (
     <main className="min-h-screen p-6">
       <header className="mb-6">
@@ -7,14 +24,9 @@ export default function HomePage() {
       </header>
 
       <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {["To do", "Doing", "Done"].map((title) => (
-          <div key={title} className="rounded-2xl border p-4">
-            <h2 className="text-sm font-semibold">{title}</h2>
-            <div className="mt-3 min-h-[240px] rounded-xl bg-slate-50 p-2 text-xs text-slate-500">
-              Tasks will go here
-            </div>
-          </div>
-        ))}
+        <TaskColumn title="To do" status="TODO" tasks={tasks} />
+        <TaskColumn title="Doing" status="DOING" tasks={tasks} />
+        <TaskColumn title="Done" status="DONE" tasks={tasks} />
       </section>
     </main>
   );
