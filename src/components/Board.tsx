@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { TaskColumn } from "@/components/TaskColumn";
+import { AddTaskForm } from "@/components/AddTaskForm";
 import type { Task, TaskStatus } from "@/lib/task";
 
 type Direction = "forward" | "backward";
@@ -16,7 +17,6 @@ function transitionStatus(
     return "DONE";
   }
 
-  // backward
   if (status === "DONE") return "DOING";
   if (status === "DOING") return "TODO";
   return "TODO";
@@ -24,6 +24,18 @@ function transitionStatus(
 
 export function Board({ initialTasks }: { initialTasks: Task[] }) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
+
+  function addTask(title: string) {
+    setTasks((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        title,
+        priority: "MEDIUM",
+        status: "TODO",
+      },
+    ]);
+  }
 
   function onTransition(taskId: string, direction: Direction) {
     setTasks((prev) =>
@@ -36,25 +48,29 @@ export function Board({ initialTasks }: { initialTasks: Task[] }) {
   }
 
   return (
-    <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
-      <TaskColumn
-        title="To do"
-        status="TODO"
-        tasks={tasks}
-        onTransition={onTransition}
-      />
-      <TaskColumn
-        title="Doing"
-        status="DOING"
-        tasks={tasks}
-        onTransition={onTransition}
-      />
-      <TaskColumn
-        title="Done"
-        status="DONE"
-        tasks={tasks}
-        onTransition={onTransition}
-      />
-    </section>
+    <>
+      <AddTaskForm onAdd={addTask} />
+
+      <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <TaskColumn
+          title="To do"
+          status="TODO"
+          tasks={tasks}
+          onTransition={onTransition}
+        />
+        <TaskColumn
+          title="Doing"
+          status="DOING"
+          tasks={tasks}
+          onTransition={onTransition}
+        />
+        <TaskColumn
+          title="Done"
+          status="DONE"
+          tasks={tasks}
+          onTransition={onTransition}
+        />
+      </section>
+    </>
   );
 }
