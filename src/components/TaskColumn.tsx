@@ -1,15 +1,6 @@
 import { Column } from "@/components/Column";
 import { TaskList } from "@/components/TaskList";
-import type { TaskPriority } from "@/components/TaskCard";
-
-export type TaskStatus = "TODO" | "DOING" | "DONE";
-
-export type Task = {
-  id: string;
-  title: string;
-  priority: TaskPriority;
-  status: TaskStatus;
-};
+import type { Task, TaskStatus } from "@/lib/task";
 
 export function TaskColumn({
   title,

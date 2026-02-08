@@ -1,19 +1,10 @@
 import { TaskColumn } from "@/components/TaskColumn";
+import type { Task } from "@/lib/task";
 
 export default function HomePage() {
-  const tasks = [
-    {
-      id: "1",
-      title: "Write tests",
-      priority: "HIGH" as const,
-      status: "TODO" as const,
-    },
-    {
-      id: "2",
-      title: "Refactor",
-      priority: "LOW" as const,
-      status: "DOING" as const,
-    },
+  const tasks: Task[] = [
+    { id: "1", title: "Write tests", priority: "HIGH", status: "TODO" },
+    { id: "2", title: "Refactor", priority: "LOW", status: "DOING" },
   ];
 
   return (
