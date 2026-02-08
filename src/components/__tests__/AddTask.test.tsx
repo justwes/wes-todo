@@ -42,4 +42,14 @@ describe("Add task", () => {
     expect(within(todo).getByText("Important task")).toBeInTheDocument();
     expect(within(todo).getByText(/high/i)).toBeInTheDocument();
   });
+
+  it("shows an error when submitting an empty title", async () => {
+    const user = userEvent.setup();
+
+    render(<Board initialTasks={[]} />);
+
+    await user.click(screen.getByRole("button", { name: /add task/i }));
+
+    expect(screen.getByText(/title is required/i)).toBeInTheDocument();
+  });
 });
