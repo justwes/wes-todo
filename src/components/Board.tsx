@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { TaskColumn } from "@/components/TaskColumn";
 import { AddTaskForm } from "@/components/AddTaskForm";
-import type { Task, TaskStatus } from "@/lib/task";
+import type { Task, TaskStatus, TaskPriority } from "@/lib/task";
 
 type Direction = "forward" | "backward";
 
@@ -25,13 +25,13 @@ function transitionStatus(
 export function Board({ initialTasks }: { initialTasks: Task[] }) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
-  function addTask(title: string) {
+  function addTask(title: string, priority: TaskPriority) {
     setTasks((prev) => [
       ...prev,
       {
         id: crypto.randomUUID(),
         title,
-        priority: "MEDIUM",
+        priority,
         status: "TODO",
       },
     ]);
