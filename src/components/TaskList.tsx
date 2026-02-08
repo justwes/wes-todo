@@ -1,29 +1,30 @@
 import { TaskCard } from "@/components/TaskCard";
 import type { Task, TaskStatus } from "@/lib/task";
 
-function nextStatus(status: TaskStatus): TaskStatus | null {
-  if (status === "TODO") return "DOING";
-  if (status === "DOING") return "DONE";
+function forwardLabel(status: TaskStatus): string | null {
+  if (status === "TODO") return "Start";
+  if (status === "DOING") return "Complete";
   return null;
 }
 
-function moveLabel(status: TaskStatus): string | null {
-  const next = nextStatus(status);
-  if (!next) return null;
-  return next === "DOING" ? "Move to Doing" : "Move to Done";
+function backwardLabel(status: TaskStatus): string | null {
+  if (status === "DOING") return "Back to To do";
+  if (status === "DONE") return "Reopen";
+  return null;
 }
 
 export function TaskList({
   tasks,
-  onAdvance,
+  onTransition,
 }: {
   tasks: Task[];
-  onAdvance?: (taskId: string) => void;
+  onTransition?: (taskId: string, direction: "forward" | "backward") => void;
 }) {
   return (
     <div className="space-y-2">
       {tasks.map((t) => {
-        const label = onAdvance ? moveLabel(t.status) : null;
+        const fLabel = onTransition ? forwardLabel(t.status) : null;
+        const bLabel = onTransition ? backwardLabel(t.status) : null;
 
         return (
           <TaskCard
@@ -31,13 +32,28 @@ export function TaskList({
             title={t.title}
             priority={t.priority}
             action={
-              label ? (
-                <button
-                  className="rounded-lg border px-2 py-1 text-xs hover:bg-slate-100"
-                  onClick={() => onAdvance?.(t.id)}
-                >
-                  {label}
-                </button>
+              fLabel || bLabel ? (
+                <div className="flex gap-2">
+                  {bLabel ? (
+                    <button
+                      type="button"
+                      className="rounded-lg border px-2 py-1 text-xs hover:bg-slate-100"
+                      onClick={() => onTransition?.(t.id, "backward")}
+                    >
+                      {bLabel}
+                    </button>
+                  ) : null}
+
+                  {fLabel ? (
+                    <button
+                      type="button"
+                      className="rounded-lg border px-2 py-1 text-xs hover:bg-slate-100"
+                      onClick={() => onTransition?.(t.id, "forward")}
+                    >
+                      {fLabel}
+                    </button>
+                  ) : null}
+                </div>
               ) : null
             }
           />

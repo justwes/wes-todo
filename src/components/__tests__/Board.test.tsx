@@ -20,7 +20,9 @@ describe("Board", () => {
     expect(within(todoColumn).getByText("Write tests")).toBeInTheDocument();
     expect(within(doingColumn).queryByText("Write tests")).toBeNull();
 
-    await user.click(screen.getByRole("button", { name: /move to doing/i }));
+    await user.click(
+      within(todoColumn).getByRole("button", { name: /start/i }),
+    );
 
     expect(within(todoColumn).queryByText("Write tests")).toBeNull();
     expect(within(doingColumn).getByText("Write tests")).toBeInTheDocument();

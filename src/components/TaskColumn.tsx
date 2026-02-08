@@ -6,18 +6,18 @@ export function TaskColumn({
   title,
   status,
   tasks,
-  onAdvance,
+  onTransition,
 }: {
   title: string;
   status: TaskStatus;
   tasks: Task[];
-  onAdvance?: (taskId: string) => void;
+  onTransition?: (taskId: string, direction: "forward" | "backward") => void;
 }) {
   const filtered = tasks.filter((t) => t.status === status);
 
   return (
     <Column title={title}>
-      <TaskList tasks={filtered} onAdvance={onAdvance} />
+      <TaskList tasks={filtered} onTransition={onTransition} />
     </Column>
   );
 }

@@ -4,19 +4,33 @@ import { useState } from "react";
 import { TaskColumn } from "@/components/TaskColumn";
 import type { Task, TaskStatus } from "@/lib/task";
 
-function advanceStatus(status: TaskStatus): TaskStatus {
-  if (status === "TODO") return "DOING";
-  if (status === "DOING") return "DONE";
-  return "DONE";
+type Direction = "forward" | "backward";
+
+function transitionStatus(
+  status: TaskStatus,
+  direction: Direction,
+): TaskStatus {
+  if (direction === "forward") {
+    if (status === "TODO") return "DOING";
+    if (status === "DOING") return "DONE";
+    return "DONE";
+  }
+
+  // backward
+  if (status === "DONE") return "DOING";
+  if (status === "DOING") return "TODO";
+  return "TODO";
 }
 
 export function Board({ initialTasks }: { initialTasks: Task[] }) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
-  function onAdvance(taskId: string) {
+  function onTransition(taskId: string, direction: Direction) {
     setTasks((prev) =>
       prev.map((t) =>
-        t.id === taskId ? { ...t, status: advanceStatus(t.status) } : t,
+        t.id === taskId
+          ? { ...t, status: transitionStatus(t.status, direction) }
+          : t,
       ),
     );
   }
@@ -27,19 +41,19 @@ export function Board({ initialTasks }: { initialTasks: Task[] }) {
         title="To do"
         status="TODO"
         tasks={tasks}
-        onAdvance={onAdvance}
+        onTransition={onTransition}
       />
       <TaskColumn
         title="Doing"
         status="DOING"
         tasks={tasks}
-        onAdvance={onAdvance}
+        onTransition={onTransition}
       />
       <TaskColumn
         title="Done"
         status="DONE"
         tasks={tasks}
-        onAdvance={onAdvance}
+        onTransition={onTransition}
       />
     </section>
   );
