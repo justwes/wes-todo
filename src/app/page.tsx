@@ -1,4 +1,4 @@
-import { TaskColumn } from "@/components/TaskColumn";
+import { Board } from "@/components/Board";
 import type { Task } from "@/lib/task";
 
 export default function HomePage() {
@@ -14,11 +14,7 @@ export default function HomePage() {
         <p className="text-sm text-slate-500">Personal task board</p>
       </header>
 
-      <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <TaskColumn title="To do" status="TODO" tasks={tasks} />
-        <TaskColumn title="Doing" status="DOING" tasks={tasks} />
-        <TaskColumn title="Done" status="DONE" tasks={tasks} />
-      </section>
+      <Board initialTasks={tasks} />
     </main>
   );
 }
