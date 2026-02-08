@@ -1,36 +1,153 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wes To Do
 
-## Getting Started
+A single‑user, browser‑based **Kanban-style to‑do app**, built incrementally with **Next.js, React, TypeScript, Tailwind CSS**, and **test‑driven development (TDD)**.
 
-First, run the development server:
+This project is intentionally designed to grow over time: starting simple and correct, then layering in persistence, projects, and multi‑user support without rewrites.
+
+---
+
+## ✨ Features (Current)
+
+- Add tasks with a title and priority
+- Inline validation with accessible error feedback
+- Kanban board with three states:
+  - **To do** → **Doing** → **Done**
+- Move tasks forward and backward between columns
+- In‑memory state management (no backend yet)
+- Light & dark mode support via theme tokens (respects OS / browser preference)
+- Fully unit‑tested UI and state logic
+
+---
+
+## 🧠 Design Principles
+
+- **Incremental development** — small, testable steps
+- **TDD-first** — behavior defined by tests before implementation
+- **Single source of truth** — all task state owned by the Board component
+- **Separation of concerns** — presentation vs business logic
+- **Future-proof** — architecture prepared for persistence and multi-user support
+
+---
+
+## 🧱 Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **UI:** React + Tailwind CSS
+- **Testing:** Vitest + Testing Library
+- **Styling:** CSS theme tokens + Tailwind utilities
+
+No backend, database, or auth yet — by design.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (LTS recommended)
+- npm
+
+### Install & Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Run Tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test
+```
 
-## Learn More
+All core behavior is covered by unit tests.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧪 Testing Philosophy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project uses **true TDD**:
 
-## Deploy on Vercel
+- Tests describe _what the user should be able to do_
+- UI labels are tested as the user sees them
+- State transitions are tested via user interactions
+- Refactors are safe because tests protect behavior
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Tests are colocated with the components they cover.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🎨 Theming & Dark Mode
+
+The app supports light and dark mode **without forcing a theme**.
+
+- Uses semantic CSS tokens (`--bg`, `--fg`, `--surface`, etc.)
+- Responds to `prefers-color-scheme`
+- Compatible with dark‑mode browser extensions
+- Tailwind is used for layout and spacing; tokens control color
+
+This avoids reliance on browser defaults and keeps contrast predictable.
+
+---
+
+## 📂 Project Structure (Simplified)
+
+```
+src/
+  app/              # Next.js app router
+  components/       # UI + stateful components
+  lib/              # Domain types (Task, Status, Priority)
+  components/__tests__/
+                    # Unit tests (TDD-driven)
+```
+
+Key components:
+
+- `Board` — owns all task state and transitions
+- `TaskColumn` — filters tasks by status
+- `TaskList` — renders tasks and available actions
+- `TaskCard` — presentational task view
+- `AddTaskForm` — task creation with validation
+
+---
+
+## 🛣️ Roadmap
+
+Planned next steps (in order):
+
+1. Archive completed tasks
+2. Projects / task grouping
+3. Persistence layer (Postgres via repository interface)
+4. Keyboard navigation improvements
+5. Auth + multi‑user support
+
+Each feature will be added incrementally and test‑first.
+
+---
+
+## 📜 License
+
+MIT License — see `LICENSE` for details.
+
+---
+
+## 👋 Contributing
+
+This is currently a personal project, but the repository is public and intentionally readable.
+
+If you open issues or PRs:
+
+- Keep changes small
+- Include or update tests
+- Preserve the incremental/TDD approach
+
+---
+
+## 📌 Status
+
+**Actively developed.**
+
+The current version is stable, tested, and intentionally minimal.
