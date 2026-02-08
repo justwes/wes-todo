@@ -13,6 +13,24 @@ function backwardLabel(status: TaskStatus): string | null {
   return null;
 }
 
+function ActionButton({
+  onClick,
+  children,
+}: {
+  onClick: () => void;
+  children: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="rounded-lg border border-[rgb(var(--border))] bg-transparent px-2 py-1 text-xs text-[rgb(var(--fg))] hover:bg-[rgb(var(--surface))]"
+    >
+      {children}
+    </button>
+  );
+}
+
 export function TaskList({
   tasks,
   onTransition,
@@ -35,23 +53,19 @@ export function TaskList({
               fLabel || bLabel ? (
                 <div className="flex gap-2">
                   {bLabel ? (
-                    <button
-                      type="button"
-                      className="rounded-lg border px-2 py-1 text-xs hover:bg-slate-100"
+                    <ActionButton
                       onClick={() => onTransition?.(t.id, "backward")}
                     >
                       {bLabel}
-                    </button>
+                    </ActionButton>
                   ) : null}
 
                   {fLabel ? (
-                    <button
-                      type="button"
-                      className="rounded-lg border px-2 py-1 text-xs hover:bg-slate-100"
+                    <ActionButton
                       onClick={() => onTransition?.(t.id, "forward")}
                     >
                       {fLabel}
-                    </button>
+                    </ActionButton>
                   ) : null}
                 </div>
               ) : null

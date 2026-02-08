@@ -31,6 +31,12 @@ export function AddTaskForm({
     if (error) setError(null);
   }
 
+  const controlBase =
+    "rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--bg))] text-[rgb(var(--fg))] text-sm";
+  const controlHover = "hover:bg-[rgb(var(--surface))]";
+  const controlFocus =
+    "focus:outline-none focus:ring-2 focus:ring-[rgb(var(--border))] focus:ring-offset-2 focus:ring-offset-[rgb(var(--bg))]";
+
   return (
     <form onSubmit={submit} className="mb-4">
       <div className="flex gap-2">
@@ -40,9 +46,13 @@ export function AddTaskForm({
           value={title}
           onChange={(e) => onTitleChange(e.target.value)}
           aria-invalid={!!error}
-          className={`flex-1 rounded-lg border px-3 py-2 text-sm ${
-            error ? "border-red-500" : ""
-          }`}
+          className={[
+            "flex-1 px-3 py-2",
+            controlBase,
+            controlFocus,
+            error ? "border-red-500" : "",
+            "placeholder:text-[rgb(var(--muted))]",
+          ].join(" ")}
         />
 
         <label htmlFor="priority" className="sr-only">
@@ -53,7 +63,12 @@ export function AddTaskForm({
           aria-label="Priority"
           value={priority}
           onChange={(e) => setPriority(e.target.value as TaskPriority)}
-          className="rounded-lg border px-2 py-2 text-sm"
+          className={[
+            "px-2 py-2",
+            controlBase,
+            controlHover,
+            controlFocus,
+          ].join(" ")}
         >
           <option value="LOW">Low</option>
           <option value="MEDIUM">Medium</option>
@@ -62,13 +77,21 @@ export function AddTaskForm({
 
         <button
           type="submit"
-          className="rounded-lg border px-3 py-2 text-sm hover:bg-slate-100"
+          className={[
+            "px-3 py-2",
+            controlBase,
+            controlHover,
+            controlFocus,
+            "font-medium",
+          ].join(" ")}
         >
           Add task
         </button>
       </div>
 
-      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {error && (
+        <p className="mt-1 text-xs text-[rgb(var(--danger))]">{error}</p>
+      )}
     </form>
   );
 }

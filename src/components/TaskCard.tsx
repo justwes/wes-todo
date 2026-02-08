@@ -17,10 +17,10 @@ export function TaskCard({
   action?: ReactNode;
 }) {
   return (
-    <div className="rounded-xl border bg-white p-3">
+    <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] p-3">
       <div className="flex items-start justify-between gap-2">
-        <p className="text-sm font-medium">{title}</p>
-        <span className="text-[11px] rounded-lg border px-2 py-0.5 text-slate-600">
+        <p className="text-sm font-medium text-[rgb(var(--fg))]">{title}</p>
+        <span className="rounded-lg border border-[rgb(var(--border))] px-2 py-0.5 text-[11px] text-[rgb(var(--muted))]">
           {priorityLabel(priority)}
         </span>
       </div>
